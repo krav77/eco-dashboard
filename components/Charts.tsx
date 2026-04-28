@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Line, Bar, Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -13,6 +14,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { trackEvent } from '@/lib/analytics';
 
 ChartJS.register(
   CategoryScale,
@@ -32,6 +34,18 @@ interface ChartsProps {
 }
 
 export default function Charts({ selectedStation, stations }: ChartsProps) {
+
+
+  useEffect(() => {
+    if (selectedStation) {
+      trackEvent('chart_viewed', {
+        stationId: selectedStation.id,
+        stationName: selectedStation.name,
+        pollutionLevel: selectedStation.pollutionLevel
+      });
+    }
+  }, [selectedStation]);
+
   if (!selectedStation) {
     return (
       <div className="h-full flex flex-col items-center justify-center bg-white rounded-3xl border border-gray-100 p-10 text-center">
@@ -103,14 +117,6 @@ export default function Charts({ selectedStation, stations }: ChartsProps) {
           padding: 15,
           font: { size: 13 },
           usePointStyle: true,
-        },
-        onClick: (e: any, legendItem: any, legend: any) => {
-          const index = legendItem.datasetIndex ?? 0;
-          const ci = legend.chart;
-          if (ci.data.datasets[index]) {
-            ci.data.datasets[index].hidden = !ci.data.datasets[index].hidden;
-            ci.update();
-          }
         },
       },
       tooltip: {

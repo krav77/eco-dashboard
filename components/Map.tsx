@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { stations } from '@/lib/data';
+import { trackEvent } from '@/lib/analytics';
 
 const MapContainer = dynamic(
   () => import('react-leaflet').then((mod) => mod.MapContainer),
@@ -98,7 +99,16 @@ export default function InteractiveMap({
             position={[station.lat, station.lng]}
             icon={createCustomIcon(station.pollutionLevel, isSelected)}
             eventHandlers={{
-              click: () => onStationSelect(station.id),
+              click: () => {
+                onStationSelect(station.id);
+
+                trackEvent('map_marker_click', {
+                  stationId: station.id,
+                  stationName: station.name.trim(),
+                  pollutionLevel: station.pollutionLevel,
+                  city: station.name.trim()
+                });
+              },
             }}
           >
             <Popup>

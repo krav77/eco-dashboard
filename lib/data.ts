@@ -12,7 +12,7 @@ export interface Station {
 export const stations: Station[] = [
   {
     id: "1",
-    name: "Київ – Центр",
+    name: "Київ ",
     lat: 50.4501,
     lng: 30.5234,
     pollutionLevel: 65,
@@ -30,7 +30,7 @@ export const stations: Station[] = [
   },
   {
     id: "2",
-    name: "Львів – Промзона",
+    name: "Львів ",
     lat: 49.8397,
     lng: 24.0297,
     pollutionLevel: 35,
@@ -48,7 +48,7 @@ export const stations: Station[] = [
   },
   {
     id: "3",
-    name: "Одеса – Морпорт",
+    name: "Одеса ",
     lat: 46.4825,
     lng: 30.7233,
     pollutionLevel: 85,
@@ -66,7 +66,7 @@ export const stations: Station[] = [
   },
   {
     id: "4",
-    name: "Харків – Салтівка",
+    name: "Харків ",
     lat: 49.9935,
     lng: 36.2304,
     pollutionLevel: 52,
